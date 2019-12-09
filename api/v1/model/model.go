@@ -13,19 +13,19 @@ var (
 )
 
 type Pad struct {
-	ID, Content, Proof, NewProof string
+	ID       string `json:",omitempty"`
+	Content  string `json:",omitempty"`
+	Proof    string `json:",omitempty"`
+	NewProof string `json:",omitempty"`
 }
 
+// MinMax is a simple struct representing a minimum and maximum length for a string.
 type MinMax struct {
 	Min, Max int
 }
 
+// Check checks if a string is within the length requirements.
 func (minmax MinMax) Check(val string) bool {
 	len := len(val)
-
-	if len < minmax.Min || len > minmax.Max {
-		return false
-	}
-
-	return true
+	return !(len < minmax.Min || len > minmax.Max)
 }

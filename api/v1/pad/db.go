@@ -51,6 +51,17 @@ func Update(pad model.Pad) (err error) {
 	return
 }
 
+// Remove a pad from the database.
+func Remove(id string) (err error) {
+	_, err = db.Dot.Exec(
+		db.SQL,
+		"v1-remove-pad",
+		id,
+	)
+
+	return
+}
+
 func scan(pad *model.Pad, row *sql.Row) error {
 	return row.Scan(
 		&pad.ID,

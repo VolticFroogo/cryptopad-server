@@ -62,8 +62,17 @@ func TestV1(t *testing.T) {
 	putIncorrectProof(t, client)
 	putInvalidProofLen(t, client)
 	putInvalidNewProofLen(t, client)
+	putNoNewProof(t, client)
 	putIDTooShort(t, client)
 	putIDTooLong(t, client)
+
+	// Run all delete related tests.
+	deletePad(t, client)
+	deletePadIncorretProof(t, client)
+	deletePadNonExistant(t, client)
+	deletePadInvalidProofLen(t, client)
+	deletePadIDTooShort(t, client)
+	deletePadIDTooLong(t, client)
 }
 
 func request(t *testing.T, client *http.Client, body interface{}, output interface{}, method, url string) (res *http.Response, err error, errorResponse ErrorResponse) {
@@ -84,6 +93,11 @@ func request(t *testing.T, client *http.Client, body interface{}, output interfa
 
 	outputBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
+		return
+	}
+
+	// If the output body is empty, there can't be any JSON, exit.
+	if len(outputBody) == 0 {
 		return
 	}
 
