@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/VolticFroogo/cryptopad-server/api/v1/model"
 	"github.com/VolticFroogo/cryptopad-server/helper"
+	"github.com/gorilla/mux"
 )
 
 var (
@@ -23,13 +25,13 @@ var (
 
 // Get a pad.
 func Get(w http.ResponseWriter, r *http.Request) {
-	// Get data from the JSON request.
+	// Get data from the request.
 	var data model.Pad
-	err := json.NewDecoder(r.Body).Decode(&data)
-	if err != nil {
-		helper.ThrowErr(err, http.StatusInternalServerError, w)
-		return
-	}
+
+	vars := mux.Vars(r)
+	data.ID = vars["id"]
+
+	log.Println(data)
 
 	// Check if the ID is a valid length.
 	if !model.IDLen.Check(data.ID) {

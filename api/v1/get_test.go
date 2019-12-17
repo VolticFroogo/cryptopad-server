@@ -21,7 +21,7 @@ func get(t *testing.T, client *http.Client) {
 
 	output := &model.Pad{}
 
-	res, err, errorResponse := request(t, client, body, output, http.MethodGet, baseURL+"pad")
+	res, err, errorResponse := getRequest(t, client, output, baseURL+"pad/"+body.ID)
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -45,13 +45,13 @@ func getNoID(t *testing.T, client *http.Client) {
 		ID: "",
 	}
 
-	res, err, errorResponse := request(t, client, body, nil, http.MethodGet, baseURL+"pad")
+	res, err, errorResponse := getRequest(t, client, nil, baseURL+"pad/"+body.ID)
 	if err != nil {
 		t.Error(err.Error())
 	}
 
-	if res.StatusCode != http.StatusBadRequest {
-		t.Errorf("get pad no id: expected status bad request, got %v, %v", res.Status, errorResponse.Error)
+	if res.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("get pad no id: expected status method not allowed, got %v, %v", res.Status, errorResponse.Error)
 		return
 	}
 
@@ -64,7 +64,7 @@ func getIDTooShort(t *testing.T, client *http.Client) {
 		ID: "abc",
 	}
 
-	res, err, errorResponse := request(t, client, body, nil, http.MethodGet, baseURL+"pad")
+	res, err, errorResponse := getRequest(t, client, nil, baseURL+"pad/"+body.ID)
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -83,7 +83,7 @@ func getIDTooLong(t *testing.T, client *http.Client) {
 		ID: "abcdefghijklmnopq",
 	}
 
-	res, err, errorResponse := request(t, client, body, nil, http.MethodGet, baseURL+"pad")
+	res, err, errorResponse := getRequest(t, client, nil, baseURL+"pad/"+body.ID)
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -102,7 +102,7 @@ func getNonExistant(t *testing.T, client *http.Client) {
 		ID: "non-existant",
 	}
 
-	res, err, errorResponse := request(t, client, body, nil, http.MethodGet, baseURL+"pad")
+	res, err, errorResponse := getRequest(t, client, nil, baseURL+"pad/"+body.ID)
 	if err != nil {
 		t.Error(err.Error())
 	}

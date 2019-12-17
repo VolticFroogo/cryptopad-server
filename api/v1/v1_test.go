@@ -75,6 +75,37 @@ func TestV1(t *testing.T) {
 	deletePadIDTooLong(t, client)
 }
 
+func getRequest(t *testing.T, client *http.Client, output interface{}, url string) (res *http.Response, err error, errorResponse ErrorResponse) {
+	res, err = http.Get(url)
+	if err != nil {
+		return
+	}
+
+	outputBody, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return
+	}
+
+	// If the output body is empty, there can't be any JSON, exit.
+	if len(outputBody) == 0 {
+		return
+	}
+
+	err = json.Unmarshal(outputBody, &errorResponse)
+	if err != nil {
+		return
+	}
+
+	if output != nil {
+		err = json.Unmarshal(outputBody, &output)
+		if err != nil {
+			return
+		}
+	}
+
+	return
+}
+
 func request(t *testing.T, client *http.Client, body interface{}, output interface{}, method, url string) (res *http.Response, err error, errorResponse ErrorResponse) {
 	bodyBytes, err := json.Marshal(body)
 	if err != nil {

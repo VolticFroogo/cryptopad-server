@@ -20,5 +20,5 @@ func main() {
 	}
 
 	// Start handling incoming requests.
-	go handle.Start()
+	handle.Start()
 }

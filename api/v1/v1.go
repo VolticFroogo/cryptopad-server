@@ -13,7 +13,7 @@ const (
 
 // Handle adds the v1 API endpoints.
 func Handle(r *mux.Router) {
-	r.Handle(urlPrefix+"pad", http.HandlerFunc(pad.Get)).Methods(http.MethodGet)
+	r.Handle(urlPrefix+"pad/{id}", http.HandlerFunc(pad.Get)).Methods(http.MethodGet)
 	r.Handle(urlPrefix+"pad", http.HandlerFunc(pad.Put)).Methods(http.MethodPut)
 	r.Handle(urlPrefix+"pad", http.HandlerFunc(pad.Delete)).Methods(http.MethodDelete)
 }
