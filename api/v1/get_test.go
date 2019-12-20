@@ -16,7 +16,6 @@ func get(t *testing.T, client *http.Client) {
 	expected := model.Pad{
 		ID:      "test",
 		Content: "ENCRYPTED-STUFF-HERE",
-		Proof:   "PROOF-KEY",
 	}
 
 	output := &model.Pad{}

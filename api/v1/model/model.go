@@ -15,8 +15,8 @@ var (
 type Pad struct {
 	ID       string `json:",omitempty"`
 	Content  string `json:",omitempty"`
-	Proof    string `json:",omitempty"`
-	NewProof string `json:",omitempty"`
+	Proof    string `json:"-"`
+	NewProof string `json:"-"`
 }
 
 // MinMax is a simple struct representing a minimum and maximum length for a string.
