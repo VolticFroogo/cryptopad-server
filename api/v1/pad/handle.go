@@ -48,6 +48,9 @@ func Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	pad.Proof = ""
+	pad.NewProof = ""
+
 	// Return the pad to the client.
 	helper.JSONResponse(pad, http.StatusOK, w)
 }
