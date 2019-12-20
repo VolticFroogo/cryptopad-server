@@ -39,25 +39,6 @@ func get(t *testing.T, client *http.Client) {
 	t.Logf("get pad: success (%v, %v)", res.Status, errorResponse.Error)
 }
 
-// getNoID tests a get request without providing an ID.
-func getNoID(t *testing.T, client *http.Client) {
-	body := model.Pad{
-		ID: "",
-	}
-
-	res, err, errorResponse := getRequest(t, client, nil, baseURL+"pad/"+body.ID)
-	if err != nil {
-		t.Error(err.Error())
-	}
-
-	if res.StatusCode != http.StatusMethodNotAllowed {
-		t.Errorf("get pad no id: expected status method not allowed, got %v, %v", res.Status, errorResponse.Error)
-		return
-	}
-
-	t.Logf("get pad no id: success (%v, %v)", res.Status, errorResponse.Error)
-}
-
 // getIDTooShort tests a get request with an ID which is too short.
 func getIDTooShort(t *testing.T, client *http.Client) {
 	body := model.Pad{

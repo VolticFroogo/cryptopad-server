@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/VolticFroogo/cryptopad-server/api/v1/model"
@@ -30,8 +29,6 @@ func Get(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	data.ID = vars["id"]
-
-	log.Println(data)
 
 	// Check if the ID is a valid length.
 	if !model.IDLen.Check(data.ID) {

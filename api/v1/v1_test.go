@@ -51,7 +51,6 @@ func TestV1(t *testing.T) {
 
 	// Run all get related tests.
 	get(t, client)
-	getNoID(t, client)
 	getIDTooShort(t, client)
 	getIDTooLong(t, client)
 	getNonExistant(t, client)
